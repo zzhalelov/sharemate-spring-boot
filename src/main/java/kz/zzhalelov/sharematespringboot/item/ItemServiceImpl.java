@@ -32,7 +32,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public Item update(int itemId, Item updatedItem, int userId) {
         Item existingItem = itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Не найден товар"));
-        User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Не найден user"));
+        userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Не найден user"));
         if (existingItem.getOwner().getId() != userId) {
             throw new ForbiddenException("Этот пользователь не явдяется владельцем предмета");
         }

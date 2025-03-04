@@ -1,7 +1,5 @@
 package kz.zzhalelov.sharematespringboot.item;
 
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 public interface ItemService {
