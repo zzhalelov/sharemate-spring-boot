@@ -6,7 +6,6 @@ import kz.zzhalelov.sharematespringboot.user.dto.UserMapper;
 import kz.zzhalelov.sharematespringboot.user.dto.UserResponseDto;
 import kz.zzhalelov.sharematespringboot.user.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +15,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
-    private UserMapper userMapper;
-    private UserService userService;
+    private final UserMapper userMapper;
+    private final UserService userService;
 
     @PostMapping
     public UserResponseDto create(@RequestBody @Valid UserCreateDto userCreate) {

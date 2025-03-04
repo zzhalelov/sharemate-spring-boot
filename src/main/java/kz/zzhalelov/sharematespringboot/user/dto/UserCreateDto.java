@@ -9,9 +9,9 @@ import lombok.experimental.FieldDefaults;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserCreateDto {
-    @NotBlank(message = "")
+    @NotBlank(message = "Имя не может быть пустым")
     String name;
-    @NotBlank(message = "")
+    @NotBlank(message = "Email не может быть пустым")
     @Email(message = "")
     String email;
 

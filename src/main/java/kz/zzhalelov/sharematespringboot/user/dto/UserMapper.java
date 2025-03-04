@@ -1,17 +1,29 @@
 package kz.zzhalelov.sharematespringboot.user.dto;
 
 import kz.zzhalelov.sharematespringboot.user.User;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserMapper {
     public User fromCreate(UserCreateDto userCreateDto) {
-        return null;
+        User user = new User();
+        user.setName(userCreateDto.getName());
+        user.setEmail(userCreateDto.getEmail());
+        return user;
     }
 
     public User fromUpdate(UserUpdateDto userUpdateDto) {
-        return null;
+        User user = new User();
+        user.setName(userUpdateDto.getName());
+        user.setEmail(userUpdateDto.getEmail());
+        return user;
     }
 
     public UserResponseDto toResponse(User user) {
-        return null;
+        UserResponseDto userResponseDto = new UserResponseDto();
+        userResponseDto.setId(user.getId());
+        userResponseDto.setName(user.getName());
+        userResponseDto.setEmail(user.getEmail());
+        return userResponseDto;
     }
 }

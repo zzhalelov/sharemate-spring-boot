@@ -1,4 +1,4 @@
-package kz.zzhalelov.sharematespringboot.user.dto;
+package kz.zzhalelov.sharematespringboot.item.dto;
 
 import lombok.AccessLevel;
 import lombok.Data;
@@ -6,7 +6,9 @@ import lombok.experimental.FieldDefaults;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserUpdateDto {
+public class ItemResponseDto {
+    int id;
     String name;
-    String email;
+    String description;
+    Boolean available;
 }
