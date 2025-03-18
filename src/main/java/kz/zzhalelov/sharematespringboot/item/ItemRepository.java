@@ -1,14 +1,16 @@
 package kz.zzhalelov.sharematespringboot.item;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.List;
-import java.util.Optional;
 
-public interface ItemRepository {
-    Item save(Item item);
+public interface ItemRepository extends JpaRepository<Item, Integer> {
+    List<Item> findByOwner_Id(int ownerId);
 
-    Optional<Item> findById(int itemId);
-
-    List<Item> findByText(String text);
-
-    List<Item> findAllByOwner(int userId);
+    @Query("select i from Item i " +
+            "where i.available = true " +
+            "and (upper(i.name) like upper(concat('%', :text, '%'))  " +
+            "or upper(i.description) like upper(concat('%', :text, '%'))) ")
+    List<Item> search(String text);
 }

@@ -9,9 +9,10 @@ import java.util.List;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ItemResponseDto {
+public class ItemFullResponseDto {
     int id;
     String name;
     String description;
     Boolean available;
+    List<CommentResponseDto> comments;
 }

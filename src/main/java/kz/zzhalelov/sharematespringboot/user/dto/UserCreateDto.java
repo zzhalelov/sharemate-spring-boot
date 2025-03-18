@@ -14,5 +14,4 @@ public class UserCreateDto {
     @NotBlank(message = "Email не может быть пустым")
     @Email(message = "")
     String email;
-
 }

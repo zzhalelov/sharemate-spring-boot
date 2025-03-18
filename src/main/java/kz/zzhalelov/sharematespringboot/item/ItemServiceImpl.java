@@ -52,7 +52,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findAllByOwner(int userId) {
-        return itemRepository.findAllByOwner(userId);
+        return itemRepository.findByOwner_Id(userId);
     }
 
     @Override
@@ -60,6 +60,6 @@ public class ItemServiceImpl implements ItemService {
         if (text == null || text.isBlank()) {
             return Collections.emptyList();
         }
-        return itemRepository.findByText(text);
+        return itemRepository.search(text);
     }
 }
