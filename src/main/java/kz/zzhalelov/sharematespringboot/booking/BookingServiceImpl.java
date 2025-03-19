@@ -1,6 +1,5 @@
 package kz.zzhalelov.sharematespringboot.booking;
 
-import kz.zzhalelov.sharematespringboot.booking.dto.BookingMapper;
 import kz.zzhalelov.sharematespringboot.exception.BadRequestException;
 import kz.zzhalelov.sharematespringboot.exception.ForbiddenException;
 import kz.zzhalelov.sharematespringboot.exception.NotFoundException;
@@ -14,13 +13,11 @@ import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
-    private final BookingMapper bookingMapper;
     private final BookingRepository bookingRepository;
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
 
-    public BookingServiceImpl(BookingMapper bookingMapper, BookingRepository bookingRepository, UserRepository userRepository, ItemRepository itemRepository) {
-        this.bookingMapper = bookingMapper;
+    public BookingServiceImpl(BookingRepository bookingRepository, UserRepository userRepository, ItemRepository itemRepository) {
         this.bookingRepository = bookingRepository;
         this.userRepository = userRepository;
         this.itemRepository = itemRepository;

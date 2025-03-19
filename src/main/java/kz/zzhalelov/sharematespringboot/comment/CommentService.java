@@ -1,8 +1,5 @@
 package kz.zzhalelov.sharematespringboot.comment;
 
-import kz.zzhalelov.sharematespringboot.comment.dto.CommentCreateDto;
-import kz.zzhalelov.sharematespringboot.item.Item;
-
 import java.util.List;
 
 public interface CommentService {

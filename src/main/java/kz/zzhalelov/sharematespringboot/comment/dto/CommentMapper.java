@@ -1,13 +1,8 @@
 package kz.zzhalelov.sharematespringboot.comment.dto;
 
 import kz.zzhalelov.sharematespringboot.comment.Comment;
-import kz.zzhalelov.sharematespringboot.item.Item;
-import kz.zzhalelov.sharematespringboot.user.User;
-import kz.zzhalelov.sharematespringboot.user.dto.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor

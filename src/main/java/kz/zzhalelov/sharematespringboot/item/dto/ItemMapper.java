@@ -1,6 +1,5 @@
 package kz.zzhalelov.sharematespringboot.item.dto;
 
-import kz.zzhalelov.sharematespringboot.comment.Comment;
 import kz.zzhalelov.sharematespringboot.comment.dto.CommentMapper;
 import kz.zzhalelov.sharematespringboot.comment.dto.CommentResponseDto;
 import kz.zzhalelov.sharematespringboot.item.Item;
@@ -39,7 +38,7 @@ public class ItemMapper {
         return dto;
     }
 
-    public ItemFullResponseDto fullResponseDto(Item item) {
+    public ItemFullResponseDto toFullResponse(Item item) {
         ItemFullResponseDto dto = new ItemFullResponseDto();
         List<CommentResponseDto> comments = item.getComments()
                 .stream()

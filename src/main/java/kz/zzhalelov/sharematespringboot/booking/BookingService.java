@@ -1,8 +1,5 @@
 package kz.zzhalelov.sharematespringboot.booking;
 
-import kz.zzhalelov.sharematespringboot.user.User;
-
-import java.awt.print.Book;
 import java.util.List;
 
 public interface BookingService {
