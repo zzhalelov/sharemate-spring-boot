@@ -6,6 +6,7 @@ import kz.zzhalelov.sharematespringboot.user.dto.UserMapper;
 import kz.zzhalelov.sharematespringboot.user.dto.UserResponseDto;
 import kz.zzhalelov.sharematespringboot.user.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserResponseDto create(@RequestBody @Valid UserCreateDto userCreate) {
         User user = userMapper.fromCreate(userCreate);
         return userMapper.toResponse(userService.create(user));
@@ -26,6 +28,7 @@ public class UserController {
 
     //PATCH /user/{id}
     @PatchMapping("/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public UserResponseDto update(@PathVariable int userId, @RequestBody @Valid UserUpdateDto userUpdate) {
         User user = userMapper.fromUpdate(userUpdate);
         return userMapper.toResponse(userService.update(userId, user));
@@ -34,7 +37,8 @@ public class UserController {
     //GET /user/{id}
     @GetMapping("/{userId}")
     public UserResponseDto findById(@PathVariable int userId) {
-        return userMapper.toResponse(userService.findById(userId));
+        User user = userService.findById(userId);
+        return userMapper.toResponse(user);
     }
 
     //DELETE /user/{id}

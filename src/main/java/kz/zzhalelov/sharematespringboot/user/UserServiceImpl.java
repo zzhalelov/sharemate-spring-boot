@@ -1,6 +1,5 @@
 package kz.zzhalelov.sharematespringboot.user;
 
-import kz.zzhalelov.sharematespringboot.exception.ConflictException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,10 +15,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        Optional<User> optionalUser = userRepository.findByEmail(user.getEmail());
-        if (optionalUser.isPresent()) {
-            throw new ConflictException("Пользователь с таким email существует");
-        }
         return userRepository.save(user);
     }
 
@@ -28,9 +23,6 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findByEmail(updatedUser.getEmail());
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            if (user.getId() != userId) {
-                throw new ConflictException("Пользователь с таким email существует");
-            }
         }
         User existingUser = findById(userId);
         merge(existingUser, updatedUser);
