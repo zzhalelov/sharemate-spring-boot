@@ -8,6 +8,7 @@ import kz.zzhalelov.sharematespringboot.comment.dto.CommentMapper;
 import kz.zzhalelov.sharematespringboot.comment.dto.CommentResponseDto;
 import kz.zzhalelov.sharematespringboot.item.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,6 +40,7 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
+    @ResponseStatus(HttpStatus.OK)
     public ItemFullResponseDto findById(@PathVariable int itemId) {
         return itemMapper.toFullResponse(itemService.findById(itemId));
     }

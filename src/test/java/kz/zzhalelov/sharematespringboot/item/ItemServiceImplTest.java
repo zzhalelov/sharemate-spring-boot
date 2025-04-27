@@ -1,5 +1,7 @@
 package kz.zzhalelov.sharematespringboot.item;
 
+import kz.zzhalelov.sharematespringboot.comment.dto.CommentMapper;
+import kz.zzhalelov.sharematespringboot.item.dto.ItemMapper;
 import kz.zzhalelov.sharematespringboot.user.User;
 import kz.zzhalelov.sharematespringboot.user.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -7,6 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
@@ -24,6 +27,9 @@ class ItemServiceImplTest {
 
     @InjectMocks
     ItemServiceImpl itemService;
+
+    @Spy
+    ItemMapper itemMapper = new ItemMapper(null);
 
     @Test
     void create_shouldCreate() {
