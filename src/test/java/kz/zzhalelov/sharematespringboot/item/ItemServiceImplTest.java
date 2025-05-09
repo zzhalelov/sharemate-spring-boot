@@ -1,6 +1,5 @@
 package kz.zzhalelov.sharematespringboot.item;
 
-import kz.zzhalelov.sharematespringboot.comment.dto.CommentMapper;
 import kz.zzhalelov.sharematespringboot.item.dto.ItemMapper;
 import kz.zzhalelov.sharematespringboot.user.User;
 import kz.zzhalelov.sharematespringboot.user.UserRepository;
@@ -13,6 +12,7 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -183,4 +183,32 @@ class ItemServiceImplTest {
         assertEquals(existingItem.getAvailable(), itemList.get(0).getAvailable());
         assertEquals(existingItem.getDescription(), itemList.get(0).getDescription());
     }
+
+//    @Test
+//    void deleteById() {
+//        User user = new User();
+//        user.setId(1);
+//        user.setName("test");
+//
+//        Item item = new Item();
+//        item.setId(1);
+//        item.setName("test");
+//        item.setAvailable(true);
+//        item.setDescription("test");
+//        item.setOwner(user);
+//
+//        Mockito
+//                .when(userRepository.findById(user.getId()))
+//                .thenReturn(Optional.of(user));
+//
+//        Mockito
+//                .when(itemRepository.findById(Mockito.anyInt()))
+//                .thenReturn(Optional.of(item));
+//
+//        itemService.deleteById(item.getId());
+//
+//        Mockito
+//                .verify(itemRepository, Mockito.times(1))
+//                .deleteById(item.getId());
+//    }
 }

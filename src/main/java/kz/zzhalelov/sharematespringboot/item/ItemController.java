@@ -25,6 +25,7 @@ public class ItemController {
     private static final String HEADER = "X-Sharer-User-Id";
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ItemResponseDto create(@RequestBody @Valid ItemCreateDto itemCreate,
                                   @RequestHeader(HEADER) int userId) {
         Item item = itemMapper.fromCreate(itemCreate);
@@ -46,6 +47,7 @@ public class ItemController {
     }
 
     @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
     public List<ItemResponseDto> findByName(@RequestParam String text) {
         return itemService.findByText(text)
                 .stream()

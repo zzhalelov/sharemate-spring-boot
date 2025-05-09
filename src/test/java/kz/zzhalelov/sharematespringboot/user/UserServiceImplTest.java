@@ -1,5 +1,6 @@
 package kz.zzhalelov.sharematespringboot.user;
 
+import kz.zzhalelov.sharematespringboot.exception.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -140,5 +141,20 @@ class UserServiceImplTest {
         assertEquals(existingUser1.getEmail(), users.get(0).getEmail());
         assertEquals(existingUser2.getName(), users.get(1).getName());
         assertEquals(existingUser2.getEmail(), users.get(1).getEmail());
+    }
+
+    @Test
+    void delete() {
+        int userId = 1;
+
+        Mockito
+                .doThrow(new NotFoundException("User not found"))
+                .when(userRepository)
+                .deleteById(userId);
+
+        assertThrows(
+                NotFoundException.class,
+                () -> userService.delete(userId)
+        );
     }
 }
