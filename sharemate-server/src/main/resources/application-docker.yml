@@ -1,0 +1,10 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    url: jdbc:postgresql://sharemate-db:5432/sharemate-spring-boot
+    username: postgres
+    password: postgres
+  jpa:
+    generate-ddl: true
