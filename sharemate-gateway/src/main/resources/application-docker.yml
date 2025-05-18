@@ -1,0 +1,6 @@
+server:
+  port: 8080
+
+sharemate-server:
+  server:
+    url: http://sharemate-server:8081
