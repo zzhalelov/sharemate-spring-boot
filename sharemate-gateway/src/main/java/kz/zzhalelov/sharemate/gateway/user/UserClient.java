@@ -41,4 +41,8 @@ public class UserClient {
         HttpEntity<UserUpdateDto> httpEntity = new HttpEntity<>(userUpdateDto);
         return restTemplate.exchange("users/{userId}", HttpMethod.PATCH, httpEntity, Object.class, Map.of("userId", userId));
     }
+
+    public ResponseEntity<Object> delete(long userId) {
+        return restTemplate.exchange("users/{userId}", HttpMethod.DELETE, null, Object.class, Map.of("userId", userId));
+    }
 }

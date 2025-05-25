@@ -51,8 +51,10 @@ public class BookingController {
 
     //GET /bookings         X-Shared-User-Id
     @GetMapping
-    public List<BookingResponseDto> findAll(@RequestHeader(HEADER) int userId) {
-        return bookingService.findAllByBooker(userId)
+    public List<BookingResponseDto> findAll(@RequestHeader(HEADER) int userId,
+                                            @RequestParam(defaultValue = "ALL") String state) {
+        BookingState bookingState = BookingState.from(state);
+        return bookingService.findAllByBooker(userId, bookingState)
                 .stream()
                 .map(bookingMapper::toResponse)
                 .collect(Collectors.toList());

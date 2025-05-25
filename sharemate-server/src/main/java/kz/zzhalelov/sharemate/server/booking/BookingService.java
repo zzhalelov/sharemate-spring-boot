@@ -5,7 +5,7 @@ import java.util.List;
 public interface BookingService {
     Booking create(Booking booking, int bookerId);
 
-    List<Booking> findAllByBooker(int bookerId);
+    List<Booking> findAllByBooker(int bookerId, BookingState bookingState);
 
     List<Booking> findAllByOwner(int ownerId);
 
