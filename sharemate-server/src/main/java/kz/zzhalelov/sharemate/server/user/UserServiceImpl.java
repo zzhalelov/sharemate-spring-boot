@@ -1,5 +1,6 @@
 package kz.zzhalelov.sharemate.server.user;
 
+import kz.zzhalelov.sharemate.server.exception.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findById(int userId) {
-        return userRepository.findById(userId).orElseThrow();
+        return userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
     }
 
     @Override

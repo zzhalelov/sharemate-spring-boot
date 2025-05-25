@@ -33,4 +33,9 @@ public class UserController {
                                          @Valid @RequestBody UserUpdateDto userUpdateDto) {
         return userClient.update(userId, userUpdateDto);
     }
+
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Object> deleteById(@PathVariable long userId) {
+        return userClient.delete(userId);
+    }
 }

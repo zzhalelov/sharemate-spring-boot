@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
-    List<Booking> findAllByBooker(User booker);
+    List<Booking> findAllByBookerOrderByStartDesc(User booker);
 
     List<Booking> findAllByItem_Owner(User owner);
 
@@ -18,4 +18,12 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
                                                                        BookingStatus bookingStatus,
                                                                        LocalDateTime localDateTime,
                                                                        Limit limit);
+
+    List<Booking> findAllByBookerAndStartIsAfterOrderByStart(User booker, LocalDateTime now);
+
+    List<Booking> findAllByBookerAndStartBeforeAndEndIsAfter(User booker, LocalDateTime now, LocalDateTime now1);
+
+    List<Booking> findAllByBookerAndEndIsBefore(User booker, LocalDateTime now);
+
+    List<Booking> findAllByBookerAndStatus(User booker, BookingStatus bookingStatus);
 }
