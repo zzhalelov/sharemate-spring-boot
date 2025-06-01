@@ -32,7 +32,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleNotFound(BadRequestException ex) {
+    public ErrorResponse handleBadRequest(BadRequestException ex) {
         log.warn(ex.getMessage());
         return new ErrorResponse(ex.getMessage());
     }

@@ -1,11 +1,14 @@
 package kz.zzhalelov.sharemate.server.item;
 
+import kz.zzhalelov.sharemate.server.booking.BookingRepository;
+import kz.zzhalelov.sharemate.server.booking.BookingStatus;
 import kz.zzhalelov.sharemate.server.exception.NotFoundException;
 import kz.zzhalelov.sharemate.server.item.dto.ItemMapper;
 import kz.zzhalelov.sharemate.server.user.User;
 import kz.zzhalelov.sharemate.server.user.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,11 +17,13 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final ItemMapper itemMapper;
+    private final BookingRepository bookingRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, ItemMapper itemMapper) {
+    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, ItemMapper itemMapper, BookingRepository bookingRepository) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
         this.itemMapper = itemMapper;
+        this.bookingRepository = bookingRepository;
     }
 
     @Override
@@ -37,8 +42,17 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item findById(int itemId) {
-        return itemRepository.findById(itemId).orElseThrow(() -> new NotFoundException("Не найден user"));
+    public Item findById(int itemId, int userId) {
+        return itemRepository.findById(itemId)
+                .map(item -> {
+                    if (item.getOwner().getId().equals(userId)) {
+                        item.setLastBooking(bookingRepository
+                                .findTopByItem_IdAndStatusAndEndBeforeOrderByEndDesc(itemId, BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
+                        item.setNextBooking(bookingRepository.findTopByItem_IdAndStatusAndStartAfterOrderByStart(itemId, BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
+                    }
+                    return item;
+                })
+                .orElseThrow(() -> new NotFoundException("Не найден user"));
     }
 
     @Override

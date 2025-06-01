@@ -1,5 +1,6 @@
 package kz.zzhalelov.sharemate.server.item.dto;
 
+import kz.zzhalelov.sharemate.server.booking.dto.BookingResponseDto;
 import kz.zzhalelov.sharemate.server.comment.dto.CommentResponseDto;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -15,4 +16,6 @@ public class ItemFullResponseDto {
     String description;
     Boolean available;
     List<CommentResponseDto> comments;
+    BookingResponseDto lastBooking;
+    BookingResponseDto nextBooking;
 }

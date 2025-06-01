@@ -7,7 +7,7 @@ public interface ItemService {
 
     Item update(int itemId, Item updatedItem, int userId);
 
-    Item findById(int itemId);
+    Item findById(int itemId, int userId);
 
     void deleteById(int itemId);
 

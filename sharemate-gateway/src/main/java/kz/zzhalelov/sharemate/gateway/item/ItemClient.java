@@ -26,8 +26,14 @@ public class ItemClient {
                 .build();
     }
 
-    public ResponseEntity<Object> findById(long itemId) {
-        return restTemplate.getForEntity("/items/{id}", Object.class,
+    public ResponseEntity<Object> findById(Long itemId, long userId) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Sharer-User-Id", String.valueOf(userId));
+        HttpEntity<Object> entity = new HttpEntity<>(headers);
+        return restTemplate.exchange("/items/{id}",
+                HttpMethod.GET,
+                entity,
+                Object.class,
                 Map.of("id", itemId));
     }
 

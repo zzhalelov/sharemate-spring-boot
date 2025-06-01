@@ -15,8 +15,9 @@ public class ItemController {
     private final ItemClient itemClient;
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<Object> findById(@PathVariable Long itemId) {
-        return itemClient.findById(itemId);
+    public ResponseEntity<Object> findById(@PathVariable Long itemId,
+                                           @RequestHeader("X-Sharer-User-Id") int userId) {
+        return itemClient.findById(itemId, userId);
     }
 
     @PostMapping

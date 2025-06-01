@@ -7,7 +7,7 @@ public interface BookingService {
 
     List<Booking> findAllByBooker(int bookerId, BookingState bookingState);
 
-    List<Booking> findAllByOwner(int ownerId);
+    List<Booking> findAllByOwner(int ownerId, BookingState bookingState);
 
     Booking findById(int bookingId, int userId);
 
