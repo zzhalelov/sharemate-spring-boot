@@ -1,7 +1,6 @@
 package kz.zzhalelov.sharemate.gateway.booking;
 
 import jakarta.validation.Valid;
-import kz.zzhalelov.sharemate.server.booking.BookingService;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingCreateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +32,9 @@ public class BookingController {
     }
 
     @GetMapping("/owner")
-    public ResponseEntity<Object> findAllByOwner(@RequestHeader("X-Sharer-User-Id") long userId) {
-        return bookingClient.findAllByOwner(userId);
+    public ResponseEntity<Object> findAllByOwner(@RequestHeader("X-Sharer-User-Id") long userId,
+                                                 @RequestParam(defaultValue = "ALL") String state) {
+        return bookingClient.findAllByOwner(userId, state);
     }
 
     @GetMapping

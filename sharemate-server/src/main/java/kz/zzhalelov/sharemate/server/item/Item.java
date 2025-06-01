@@ -1,6 +1,7 @@
 package kz.zzhalelov.sharemate.server.item;
 
 import jakarta.persistence.*;
+import kz.zzhalelov.sharemate.server.booking.Booking;
 import kz.zzhalelov.sharemate.server.comment.Comment;
 import kz.zzhalelov.sharemate.server.user.User;
 import lombok.Getter;
@@ -24,4 +25,8 @@ public class Item {
     private User owner;
     @OneToMany(mappedBy = "item")
     List<Comment> comments;
+    @Transient
+    Booking lastBooking;
+    @Transient
+    Booking nextBooking;
 }

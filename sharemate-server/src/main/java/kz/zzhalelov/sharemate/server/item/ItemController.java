@@ -42,8 +42,9 @@ public class ItemController {
 
     @GetMapping("/{itemId}")
     @ResponseStatus(HttpStatus.OK)
-    public ItemFullResponseDto findById(@PathVariable int itemId) {
-        return itemMapper.toFullResponse(itemService.findById(itemId));
+    public ItemFullResponseDto findById(@PathVariable int itemId,
+                                        @RequestHeader(HEADER) int userId) {
+        return itemMapper.toFullResponse(itemService.findById(itemId, userId));
     }
 
     @GetMapping("/search")

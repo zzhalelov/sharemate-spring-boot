@@ -3,6 +3,7 @@ package kz.zzhalelov.sharemate.server.booking;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingCreateDto;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingMapper;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingResponseDto;
+import kz.zzhalelov.sharemate.server.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,8 +43,10 @@ public class BookingController {
 
     //GET /bookings/owner    X-Shared-User-Id
     @GetMapping("/owner")
-    public List<BookingResponseDto> findByOwner(@RequestHeader(HEADER) int userId) {
-        return bookingService.findAllByOwner(userId)
+    public List<BookingResponseDto> findByOwner(@RequestHeader(HEADER) int userId,
+                                                @RequestParam(defaultValue = "ALL") String state) {
+        BookingState bookingState = BookingState.from(state);
+        return bookingService.findAllByOwner(userId, bookingState)
                 .stream()
                 .map(bookingMapper::toResponse)
                 .collect(Collectors.toList());

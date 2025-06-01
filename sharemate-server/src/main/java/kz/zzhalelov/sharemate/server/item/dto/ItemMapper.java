@@ -1,5 +1,6 @@
 package kz.zzhalelov.sharemate.server.item.dto;
 
+import kz.zzhalelov.sharemate.server.booking.dto.BookingMapper;
 import kz.zzhalelov.sharemate.server.comment.dto.CommentMapper;
 import kz.zzhalelov.sharemate.server.comment.dto.CommentResponseDto;
 import kz.zzhalelov.sharemate.server.item.Item;
@@ -12,6 +13,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ItemMapper {
     private final CommentMapper commentMapper;
+    private final BookingMapper bookingMapper;
 
     public Item fromCreate(ItemCreateDto itemCreateDto) {
         Item item = new Item();
@@ -49,6 +51,8 @@ public class ItemMapper {
         dto.setName(item.getName());
         dto.setDescription(item.getDescription());
         dto.setAvailable(item.getAvailable());
+        dto.setLastBooking(bookingMapper.toResponse(item.getLastBooking()));
+        dto.setNextBooking(bookingMapper.toResponse(item.getNextBooking()));
 
         dto.setComments(comments);
         return dto;
