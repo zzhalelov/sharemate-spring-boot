@@ -3,6 +3,7 @@ package kz.zzhalelov.sharemate.server.item;
 import jakarta.persistence.*;
 import kz.zzhalelov.sharemate.server.booking.Booking;
 import kz.zzhalelov.sharemate.server.comment.Comment;
+import kz.zzhalelov.sharemate.server.request.Request;
 import kz.zzhalelov.sharemate.server.user.User;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,4 +30,6 @@ public class Item {
     Booking lastBooking;
     @Transient
     Booking nextBooking;
+    @ManyToOne
+    private Request request;
 }

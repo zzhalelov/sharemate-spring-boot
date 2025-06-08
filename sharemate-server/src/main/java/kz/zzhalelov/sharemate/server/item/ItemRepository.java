@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    List<Item> findByOwner_Id(int ownerId);
+    List<Item> findByOwner_IdOrderByIdAsc(int ownerId);
 
     @Query("select i from Item i " +
             "where i.available = true " +
