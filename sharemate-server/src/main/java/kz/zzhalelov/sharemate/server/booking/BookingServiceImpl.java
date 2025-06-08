@@ -64,7 +64,7 @@ public class BookingServiceImpl implements BookingService {
             case CURRENT:
                 return bookingRepository.findAllByBookerAndStartBeforeAndEndIsAfter(booker, now, now);
             case PAST:
-                return bookingRepository.findAllByBookerAndEndIsBefore(booker, now);
+                return bookingRepository.findAllByBookerAndEndIsBeforeOrderByStartDesc(booker, now);
             case REJECTED:
                 return bookingRepository.findAllByBookerAndStatus(booker, BookingStatus.REJECTED);
             default:
@@ -84,7 +84,7 @@ public class BookingServiceImpl implements BookingService {
             case CURRENT:
                 return bookingRepository.findAllByItem_OwnerAndStartBeforeAndEndIsAfter(owner, now, now);
             case PAST:
-                return bookingRepository.findAllByItem_OwnerAndEndIsBefore(owner, now);
+                return bookingRepository.findAllByItem_OwnerAndEndIsBeforeOrderByStartDesc(owner, now);
             case REJECTED:
                 return bookingRepository.findAllByItem_OwnerAndStatus(owner, BookingStatus.REJECTED);
             default:

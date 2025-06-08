@@ -5,6 +5,7 @@ services:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - TZ=Asia/Almaty
     depends_on:
       - sharemate-server
 
@@ -14,9 +15,12 @@ services:
       - "8081:8081"
     environment:
       - SPRING_PROFILES_ACTIVE=docker
+      - TZ=Asia/Almaty
 
   sharemate-db:
     image: postgres:15-alpine
+    ports:
+      - "5434:5432"
     environment:
       - POSTGRES_DB=sharemate-spring-boot
       - POSTGRES_USER=postgres

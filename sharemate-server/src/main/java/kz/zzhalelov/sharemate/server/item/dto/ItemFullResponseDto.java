@@ -1,6 +1,5 @@
 package kz.zzhalelov.sharemate.server.item.dto;
 
-import kz.zzhalelov.sharemate.server.booking.dto.BookingResponseDto;
 import kz.zzhalelov.sharemate.server.comment.dto.CommentResponseDto;
 import lombok.AccessLevel;
 import lombok.Data;

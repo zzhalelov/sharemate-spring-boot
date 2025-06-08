@@ -47,7 +47,7 @@ public class ItemServiceImpl implements ItemService {
                 .map(item -> {
                     if (item.getOwner().getId().equals(userId)) {
                         item.setLastBooking(bookingRepository
-                                .findTopByItem_IdAndStatusAndEndBeforeOrderByEndDesc(itemId, BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
+                                .findTopByItem_IdAndStatusAndStartBeforeOrderByEndDesc(itemId, BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
                         item.setNextBooking(bookingRepository.findTopByItem_IdAndStatusAndStartAfterOrderByStart(itemId, BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
                     }
                     return item;
@@ -62,7 +62,14 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> findAllByOwner(int userId) {
-        return itemRepository.findByOwner_Id(userId);
+        return itemRepository.findByOwner_IdOrderByIdAsc(userId)
+                .stream()
+                .peek(item -> {
+                    item.setLastBooking(bookingRepository
+                            .findTopByItem_IdAndStatusAndStartBeforeOrderByEndDesc(item.getId(), BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
+                    item.setNextBooking(bookingRepository.findTopByItem_IdAndStatusAndStartAfterOrderByStart(item.getId(), BookingStatus.APPROVED, LocalDateTime.now()).orElse(null));
+                })
+                .toList();
     }
 
     @Override

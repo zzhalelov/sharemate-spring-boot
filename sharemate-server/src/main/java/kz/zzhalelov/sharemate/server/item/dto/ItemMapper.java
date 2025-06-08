@@ -1,6 +1,6 @@
 package kz.zzhalelov.sharemate.server.item.dto;
 
-import kz.zzhalelov.sharemate.server.booking.dto.BookingMapper;
+import kz.zzhalelov.sharemate.server.booking.Booking;
 import kz.zzhalelov.sharemate.server.comment.dto.CommentMapper;
 import kz.zzhalelov.sharemate.server.comment.dto.CommentResponseDto;
 import kz.zzhalelov.sharemate.server.item.Item;
@@ -9,11 +9,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+import static kz.zzhalelov.sharemate.server.item.dto.ItemFullResponseDto.*;
+
 @Component
 @RequiredArgsConstructor
 public class ItemMapper {
     private final CommentMapper commentMapper;
-    private final BookingMapper bookingMapper;
 
     public Item fromCreate(ItemCreateDto itemCreateDto) {
         Item item = new Item();
@@ -38,6 +39,8 @@ public class ItemMapper {
         dto.setName(item.getName());
         dto.setDescription(item.getDescription());
         dto.setAvailable(item.getAvailable());
+        dto.setLastBooking(toResponse(item.getLastBooking()));
+        dto.setNextBooking(toResponse(item.getNextBooking()));
         return dto;
     }
 
@@ -51,8 +54,8 @@ public class ItemMapper {
         dto.setName(item.getName());
         dto.setDescription(item.getDescription());
         dto.setAvailable(item.getAvailable());
-        dto.setLastBooking(bookingMapper.toResponse(item.getLastBooking()));
-        dto.setNextBooking(bookingMapper.toResponse(item.getNextBooking()));
+        dto.setLastBooking(toResponse(item.getLastBooking()));
+        dto.setNextBooking(toResponse(item.getNextBooking()));
 
         dto.setComments(comments);
         return dto;
@@ -68,5 +71,16 @@ public class ItemMapper {
         if (updatedItem.getAvailable() != null) {
             existingItem.setAvailable(updatedItem.getAvailable());
         }
+    }
+
+    //конвертация Booking в BookingResponseDto
+    public BookingResponseDto toResponse(Booking booking) {
+        if (booking == null) {
+            return null;
+        }
+        BookingResponseDto dto = new BookingResponseDto();
+        dto.setId(booking.getId());
+        dto.setBookerId(booking.getBooker().getId());
+        return dto;
     }
 }
