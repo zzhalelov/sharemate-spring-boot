@@ -9,7 +9,7 @@ public interface RequestService {
 
     Request findById(int requestId);
 
-    List<Request> findAllRequestsExceptMine(int requesterId);
+    List<Request> findAllRequestsExceptMine(int requesterId, int from, int size);
 
     List<Request> findAllMyRequests(int requesterId);
 }

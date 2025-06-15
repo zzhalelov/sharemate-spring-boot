@@ -38,7 +38,9 @@ public class RequestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<Object> findAllRequestsExceptMine(@RequestHeader("X-Sharer-User-Id") long requesterId) {
-        return requestClient.findAllRequestsExceptMine(requesterId);
+    public ResponseEntity<Object> findAllRequestsExceptMine(@RequestHeader("X-Sharer-User-Id") long requesterId,
+                                                            @RequestParam(defaultValue = "0") int from,
+                                                            @RequestParam(defaultValue = "20") int size) {
+        return requestClient.findAllRequestsExceptMine(requesterId, from, size);
     }
 }

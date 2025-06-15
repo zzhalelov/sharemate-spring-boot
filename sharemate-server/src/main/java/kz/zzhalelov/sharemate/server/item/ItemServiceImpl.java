@@ -4,6 +4,8 @@ import kz.zzhalelov.sharemate.server.booking.BookingRepository;
 import kz.zzhalelov.sharemate.server.booking.BookingStatus;
 import kz.zzhalelov.sharemate.server.exception.NotFoundException;
 import kz.zzhalelov.sharemate.server.item.dto.ItemMapper;
+import kz.zzhalelov.sharemate.server.request.Request;
+import kz.zzhalelov.sharemate.server.request.RequestRepository;
 import kz.zzhalelov.sharemate.server.user.User;
 import kz.zzhalelov.sharemate.server.user.UserRepository;
 import org.springframework.stereotype.Service;
@@ -18,16 +20,24 @@ public class ItemServiceImpl implements ItemService {
     private final UserRepository userRepository;
     private final ItemMapper itemMapper;
     private final BookingRepository bookingRepository;
+    private final RequestRepository requestRepository;
 
-    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, ItemMapper itemMapper, BookingRepository bookingRepository) {
+    public ItemServiceImpl(ItemRepository itemRepository, UserRepository userRepository, ItemMapper itemMapper,
+                           BookingRepository bookingRepository,
+                           RequestRepository requestRepository) {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
         this.itemMapper = itemMapper;
         this.bookingRepository = bookingRepository;
+        this.requestRepository = requestRepository;
     }
 
     @Override
-    public Item create(Item item, int userId) {
+    public Item create(Item item, int userId, Integer requestId) {
+        if (requestId != null) {
+            Request request = requestRepository.findById(requestId).orElseThrow(() -> new NotFoundException("Не найден request"));
+            item.setRequest(request);
+        }
         User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Не найден user"));
         item.setOwner(user);
         return itemRepository.save(item);
