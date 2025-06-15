@@ -1,17 +1,20 @@
 package kz.zzhalelov.sharemate.server.request;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import kz.zzhalelov.sharemate.server.item.ItemService;
 import kz.zzhalelov.sharemate.server.request.dto.RequestCreateDto;
 import kz.zzhalelov.sharemate.server.request.dto.RequestMapper;
 import kz.zzhalelov.sharemate.server.request.dto.RequestResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/requests")
@@ -46,8 +49,10 @@ public class RequestController {
     }
 
     @GetMapping("/all")
-    public List<RequestResponseDto> findAllRequestsExceptMine(@RequestHeader(HEADER) int requesterId) {
-        return requestService.findAllRequestsExceptMine(requesterId)
+    public List<RequestResponseDto> findAllRequestsExceptMine(@RequestHeader(HEADER) int requesterId,
+                                                              @Min(0) @RequestParam(defaultValue = "0") int from,
+                                                              @Min(1) @RequestParam(defaultValue = "20") int size) {
+        return requestService.findAllRequestsExceptMine(requesterId, from, size)
                 .stream()
                 .map(requestMapper::toResponse)
                 .collect(Collectors.toList());

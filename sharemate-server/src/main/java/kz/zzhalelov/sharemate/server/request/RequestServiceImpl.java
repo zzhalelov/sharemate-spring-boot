@@ -5,6 +5,8 @@ import kz.zzhalelov.sharemate.server.exception.NotFoundException;
 import kz.zzhalelov.sharemate.server.request.dto.RequestMapper;
 import kz.zzhalelov.sharemate.server.user.User;
 import kz.zzhalelov.sharemate.server.user.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,9 +46,11 @@ public class RequestServiceImpl implements RequestService {
     }
 
     @Override
-    public List<Request> findAllRequestsExceptMine(int requesterId) {
+    public List<Request> findAllRequestsExceptMine(int requesterId, int from, int size) {
+        int page = from / size;
+        Pageable pageable = PageRequest.of(page, size);
         User user = userRepository.findById(requesterId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
-        return requestRepository.findAllByRequesterIdNotOrderByCreatedDesc(user.getId())
+        return requestRepository.findAllByRequesterIdNotOrderByCreatedDesc(user.getId(), pageable)
                 .stream()
                 .toList();
     }

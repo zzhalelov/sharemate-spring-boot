@@ -15,4 +15,5 @@ public class ItemCreateDto {
     String description;
     @NotNull(message = "Признак доступности не должен быть пустым")
     Boolean available;
+    Integer requestId;
 }

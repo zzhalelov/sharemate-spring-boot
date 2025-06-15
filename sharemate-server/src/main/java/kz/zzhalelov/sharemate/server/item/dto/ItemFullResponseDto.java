@@ -17,4 +17,5 @@ public class ItemFullResponseDto {
     List<CommentResponseDto> comments;
     BookingResponseDto lastBooking;
     BookingResponseDto nextBooking;
+    Integer requestId;
 }

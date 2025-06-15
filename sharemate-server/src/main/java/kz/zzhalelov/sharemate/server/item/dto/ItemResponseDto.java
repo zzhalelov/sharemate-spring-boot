@@ -1,6 +1,5 @@
 package kz.zzhalelov.sharemate.server.item.dto;
 
-import kz.zzhalelov.sharemate.server.booking.Booking;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -14,4 +13,5 @@ public class ItemResponseDto {
     Boolean available;
     BookingResponseDto lastBooking;
     BookingResponseDto nextBooking;
+    Integer requestId;
 }

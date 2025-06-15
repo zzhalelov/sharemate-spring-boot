@@ -29,7 +29,8 @@ public class ItemController {
     public ItemResponseDto create(@RequestBody @Valid ItemCreateDto itemCreate,
                                   @RequestHeader(HEADER) int userId) {
         Item item = itemMapper.fromCreate(itemCreate);
-        return itemMapper.toResponse(itemService.create(item, userId));
+        Integer requestId = itemCreate.getRequestId();
+        return itemMapper.toResponse(itemService.create(item, userId, requestId));
     }
 
     @PatchMapping("/{itemId}")

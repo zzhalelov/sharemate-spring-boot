@@ -46,14 +46,17 @@ public class RequestClient {
                 Object.class);
     }
 
-    public ResponseEntity<Object> findAllRequestsExceptMine(Long requesterId) {
+    public ResponseEntity<Object> findAllRequestsExceptMine(Long requesterId,
+                                                            int from,
+                                                            int size) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", String.valueOf(requesterId));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange("/requests",
+        return restTemplate.exchange("/requests/all?from={from}&size={size}",
                 HttpMethod.GET,
                 entity,
-                Object.class);
+                Object.class,
+                Map.of("from", from, "size", size));
     }
 
     public ResponseEntity<Object> create(long requesterId, RequestCreateDto requestCreateDto) {

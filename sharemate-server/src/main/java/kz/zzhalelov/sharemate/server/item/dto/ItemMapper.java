@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-import static kz.zzhalelov.sharemate.server.item.dto.ItemFullResponseDto.*;
-
 @Component
 @RequiredArgsConstructor
 public class ItemMapper {
@@ -21,7 +19,6 @@ public class ItemMapper {
         item.setName(itemCreateDto.getName());
         item.setDescription(itemCreateDto.getDescription());
         item.setAvailable(itemCreateDto.getAvailable());
-
         return item;
     }
 
@@ -41,6 +38,9 @@ public class ItemMapper {
         dto.setAvailable(item.getAvailable());
         dto.setLastBooking(toResponse(item.getLastBooking()));
         dto.setNextBooking(toResponse(item.getNextBooking()));
+        if (item.getRequest() != null) {
+            dto.setRequestId(item.getRequest().getId());
+        }
         return dto;
     }
 
@@ -56,7 +56,9 @@ public class ItemMapper {
         dto.setAvailable(item.getAvailable());
         dto.setLastBooking(toResponse(item.getLastBooking()));
         dto.setNextBooking(toResponse(item.getNextBooking()));
-
+        if (item.getRequest() != null) {
+            dto.setRequestId(item.getRequest().getId());
+        }
         dto.setComments(comments);
         return dto;
     }
