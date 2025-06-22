@@ -54,25 +54,27 @@ public class BookingClient {
                 Map.of("bookingId", bookingId));
     }
 
-    public ResponseEntity<Object> findAllByOwner(long userId, String state) {
+    public ResponseEntity<Object> findAllByOwner(long userId, String state,
+                                                 int from, int size) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HEADER, String.valueOf(userId));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange("/bookings/owner?state={state}",
+        return restTemplate.exchange("/bookings/owner?state={state}&from={from}&size={size}",
                 HttpMethod.GET,
                 entity,
                 Object.class,
-                Map.of("state", state));
+                Map.of("state", state, "from", from, "size", size));
     }
 
-    public ResponseEntity<Object> findAll(long userId, String state) {
+    public ResponseEntity<Object> findAll(long userId, String state,
+                                          int from, int size) {
         HttpHeaders headers = new HttpHeaders();
         headers.set(HEADER, String.valueOf(userId));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange("/bookings?state={state}",
+        return restTemplate.exchange("/bookings?state={state}&from={from}&size={size}",
                 HttpMethod.GET,
                 entity,
                 Object.class,
-                Map.of("state", state));
+                Map.of("state", state, "from", from, "size", size));
     }
 }
