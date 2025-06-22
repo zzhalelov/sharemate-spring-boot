@@ -12,8 +12,5 @@ import java.util.List;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestCreateDto {
-    private int id;
     private String description;
-    private LocalDateTime created;
-    private List<ItemCreateDto> items = new ArrayList<>();
 }

@@ -13,7 +13,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class RequestResponseDto {
     private int id;
-    private User requester;
     private String description;
     private LocalDateTime created;
     private List<ItemResponseDto> items;
