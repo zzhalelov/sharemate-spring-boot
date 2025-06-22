@@ -14,9 +14,9 @@ public class RequestController {
     private final RequestClient requestClient;
 
     @GetMapping("/{requestId}")
-    public ResponseEntity<Object> findById(@PathVariable Long requestId,
+    public ResponseEntity<Object> findById(@PathVariable int requestId,
                                            @RequestHeader("X-Sharer-User-Id") int requesterId) {
-        return requestClient.findById(requestId, requesterId);
+        return requestClient.findById(requesterId, requestId);
     }
 
     @PostMapping

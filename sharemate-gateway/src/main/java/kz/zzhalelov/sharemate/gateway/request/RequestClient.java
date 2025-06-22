@@ -25,11 +25,11 @@ public class RequestClient {
                 .build();
     }
 
-    public ResponseEntity<Object> findById(Long requesterId, long requestId) {
+    public ResponseEntity<Object> findById(int requesterId, int requestId) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("X-Sharer-User-Id", String.valueOf(requesterId));
         HttpEntity<Object> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange("/requests/{requesterId}",
+        return restTemplate.exchange("/requests/{requestId}",
                 HttpMethod.GET,
                 entity,
                 Object.class,

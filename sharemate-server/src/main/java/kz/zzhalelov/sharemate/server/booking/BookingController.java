@@ -1,9 +1,9 @@
 package kz.zzhalelov.sharemate.server.booking;
 
+import jakarta.validation.constraints.Min;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingCreateDto;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingMapper;
 import kz.zzhalelov.sharemate.server.booking.dto.BookingResponseDto;
-import kz.zzhalelov.sharemate.server.exception.BadRequestException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,9 +44,11 @@ public class BookingController {
     //GET /bookings/owner    X-Shared-User-Id
     @GetMapping("/owner")
     public List<BookingResponseDto> findByOwner(@RequestHeader(HEADER) int userId,
-                                                @RequestParam(defaultValue = "ALL") String state) {
+                                                @RequestParam(defaultValue = "ALL") String state,
+                                                @Min(0) @RequestParam(defaultValue = "0") int from,
+                                                @Min(1) @RequestParam(defaultValue = "20") int size) {
         BookingState bookingState = BookingState.from(state);
-        return bookingService.findAllByOwner(userId, bookingState)
+        return bookingService.findAllByOwner(userId, bookingState, from, size)
                 .stream()
                 .map(bookingMapper::toResponse)
                 .collect(Collectors.toList());
@@ -55,9 +57,11 @@ public class BookingController {
     //GET /bookings         X-Shared-User-Id
     @GetMapping
     public List<BookingResponseDto> findAll(@RequestHeader(HEADER) int userId,
-                                            @RequestParam(defaultValue = "ALL") String state) {
+                                            @RequestParam(defaultValue = "ALL") String state,
+                                            @Min(0) @RequestParam(defaultValue = "0") int from,
+                                            @Min(1) @RequestParam(defaultValue = "20") int size) {
         BookingState bookingState = BookingState.from(state);
-        return bookingService.findAllByBooker(userId, bookingState)
+        return bookingService.findAllByBooker(userId, bookingState, from, size)
                 .stream()
                 .map(bookingMapper::toResponse)
                 .collect(Collectors.toList());

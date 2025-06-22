@@ -6,6 +6,8 @@ import kz.zzhalelov.sharemate.server.item.Item;
 import kz.zzhalelov.sharemate.server.item.ItemRepository;
 import kz.zzhalelov.sharemate.server.user.User;
 import kz.zzhalelov.sharemate.server.user.UserRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -53,42 +55,47 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public List<Booking> findAllByBooker(int bookerId, BookingState bookingState) {
-        User booker = userRepository.findById(bookerId).orElseThrow();
+    public List<Booking> findAllByBooker(int bookerId, BookingState bookingState,
+                                         int from, int size) {
+        int page = from / size;
+        Pageable pageable = PageRequest.of(page, size);
+        User booker = userRepository.findById(bookerId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
         LocalDateTime now = LocalDateTime.now();
         switch (bookingState) {
             case ALL:
-                return bookingRepository.findAllByBookerOrderByStartDesc(booker);
+                return bookingRepository.findAllByBookerOrderByStartDesc(booker, pageable);
             case FUTURE:
-                return bookingRepository.findAllByBookerAndStartIsAfterOrderByStartDesc(booker, now);
+                return bookingRepository.findAllByBookerAndStartIsAfterOrderByStartDesc(booker, now, pageable);
             case CURRENT:
-                return bookingRepository.findAllByBookerAndStartBeforeAndEndIsAfter(booker, now, now);
+                return bookingRepository.findAllByBookerAndStartBeforeAndEndIsAfter(booker, now, now, pageable);
             case PAST:
-                return bookingRepository.findAllByBookerAndEndIsBeforeOrderByStartDesc(booker, now);
+                return bookingRepository.findAllByBookerAndEndIsBeforeOrderByStartDesc(booker, now, pageable);
             case REJECTED:
-                return bookingRepository.findAllByBookerAndStatus(booker, BookingStatus.REJECTED);
+                return bookingRepository.findAllByBookerAndStatus(booker, BookingStatus.REJECTED, pageable);
             default:
-                return bookingRepository.findAllByBookerAndStatus(booker, BookingStatus.WAITING);
+                return bookingRepository.findAllByBookerAndStatus(booker, BookingStatus.WAITING, pageable);
         }
     }
 
     @Override
-    public List<Booking> findAllByOwner(int ownerId, BookingState state) {
+    public List<Booking> findAllByOwner(int ownerId, BookingState state, int from, int size) {
+        int page = from / size;
+        Pageable pageable = PageRequest.of(page, size);
         User owner = userRepository.findById(ownerId).orElseThrow();
         LocalDateTime now = LocalDateTime.now();
         switch (state) {
             case ALL:
-                return bookingRepository.findAllByItem_OwnerOrderByStartDesc(owner);
+                return bookingRepository.findAllByItem_OwnerOrderByStartDesc(owner, pageable);
             case FUTURE:
-                return bookingRepository.findAllByItem_OwnerAndStartIsAfterOrderByStartDesc(owner, now);
+                return bookingRepository.findAllByItem_OwnerAndStartIsAfterOrderByStartDesc(owner, now, pageable);
             case CURRENT:
-                return bookingRepository.findAllByItem_OwnerAndStartBeforeAndEndIsAfter(owner, now, now);
+                return bookingRepository.findAllByItem_OwnerAndStartBeforeAndEndIsAfter(owner, now, now, pageable);
             case PAST:
-                return bookingRepository.findAllByItem_OwnerAndEndIsBeforeOrderByStartDesc(owner, now);
+                return bookingRepository.findAllByItem_OwnerAndEndIsBeforeOrderByStartDesc(owner, now, pageable);
             case REJECTED:
-                return bookingRepository.findAllByItem_OwnerAndStatus(owner, BookingStatus.REJECTED);
+                return bookingRepository.findAllByItem_OwnerAndStatus(owner, BookingStatus.REJECTED, pageable);
             default:
-                return bookingRepository.findAllByItem_OwnerAndStatus(owner, BookingStatus.WAITING);
+                return bookingRepository.findAllByItem_OwnerAndStatus(owner, BookingStatus.WAITING, pageable);
         }
     }
 

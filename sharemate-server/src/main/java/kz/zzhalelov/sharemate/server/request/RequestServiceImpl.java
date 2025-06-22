@@ -37,12 +37,19 @@ public class RequestServiceImpl implements RequestService {
 
     @Override
     public Request findById(int requesterId, int requestId) {
-        return null;
+        User requester = userRepository.findById(requesterId)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
+        return requestRepository.findById(requestId)
+                .orElseThrow(() -> new NotFoundException("Запрос не найден"));
+
+//        return requestRepository.findById(requestId)
+//                .orElseThrow(() -> new NotFoundException("Запрос не найден"));
     }
 
     @Override
     public Request findById(int requestId) {
-        return requestRepository.findById(requestId).orElseThrow();
+        return requestRepository.findById(requestId)
+                .orElseThrow(() -> new NotFoundException("Запрос с id " + requestId + " не найден"));
     }
 
     @Override
